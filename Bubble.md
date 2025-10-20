@@ -16,3 +16,11 @@ In Figure 3 we increase the state size to 6 numbers.
 ![Figure 3](assets/bubble_n6.png)
 
 So far we have not allowed duplicate entries in our state. [cite michael levin interview where he mentions allowing duplicate entries]. Let us now explore what happens when we allow for duplicates. But first we must consider the role of the observer. When two values in the same state are the same will we represent them as the same thing? That is to say will we have a second unique "id" independent of the value of the entry in the state? For now we will not. This means we should expect a second kind of merging to occure where two states merge due to ambiguity between "versions" of a states list entry.
+
+In Figure 4 we have 3 equivilant entries and 3 unique ones. 
+
+![Figure 4](assets/mw_dup_432111.png)
+
+Figure 5 shows the case with a single unique values and 2 sets of duplicate values
+
+![Figure 5](assets/mw_dup_32211.png)
