@@ -78,6 +78,10 @@ def main():
                     help="Output GraphML path (default: bubble_with_duplicates.graphml)")
     ap.add_argument("--png", default=None,
                     help="Optional PNG path to render a layered layout (headless; requires matplotlib)")
+    ap.add_argument("--scale", type=float, default=1.0,
+                    help="Scale factor for PNG figure size (default: 1.0)")
+    ap.add_argument("--node-color", default="#9ecae1",
+                    help="Node color for PNG (matplotlib color, default: a light blue)")
     args = ap.parse_args()
 
     values = parse_values(args.values)
@@ -107,8 +111,11 @@ def main():
             matplotlib.use("Agg")  # headless-safe
             import matplotlib.pyplot as plt
             pos = layered_layout_by_inversions(G)
-            plt.figure(figsize=(10, 8))
-            nx.draw_networkx_nodes(G, pos, node_size=400)
+            # Validate scale
+            scale = args.scale if args.scale and args.scale > 0 else 1.0
+            base_w, base_h = 10, 8
+            plt.figure(figsize=(base_w * scale, base_h * scale))
+            nx.draw_networkx_nodes(G, pos, node_size=400, node_color=args.node_color)
             nx.draw_networkx_labels(G, pos,
                 labels={n:"".join(map(str,n)) for n in G.nodes()}, font_size=8)
             nx.draw_networkx_edges(G, pos, arrows=True, arrowstyle='-|>', arrowsize=10, width=0.8)
